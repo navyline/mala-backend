@@ -18,7 +18,7 @@ export class MemberEntity {
     @Column({type: 'varchar', length: 100}) // Member's Full Name
     name: string;
 
-    @Column({type: 'int', default: 0}) // Current Points Balance
+    @Column({type: 'int', default: 0}) // Current Points 
     total_points: number;
 
     @CreateDateColumn() // Record Creation Timestamp
