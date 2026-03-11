@@ -7,7 +7,11 @@ export class MembersController {
 
   // POST /members ==> create a new member with phone and name, return member info and initial points
   @Post()
-  async create(@Body() body: { phone: string; name: string }) {
+  async create(@Body() 
+  body: { 
+    phone: string; 
+    name: string 
+  }) {
     return await this.membersService.createMember(body.phone, body.name);
   }
 
