@@ -28,7 +28,7 @@ export class MembersService {
   async getPoints(id: string) {
     const member = await this.memberRepository.findOne({
       where: { id },
-      select: ['id', 'name', 'phone', 'total_points', 'number_code'], 
+      select: ['id', 'name', 'phone', 'total_points', 'number_code', 'created_at'], 
     });
 
     if (!member) {
