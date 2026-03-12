@@ -2,6 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { randomBytes } from 'crypto';
 import { MemberEntity } from '../members/entities/member.entity';
 
 // authentication service for handling login and JWT token generation
@@ -51,6 +52,7 @@ async register(name: string, phone: string) {
 
   const newMember = this.memberRepository.create({
     name,
+    number_code: `MCD-${randomBytes(4).toString('hex')}`, // create member code using random hex
     phone,
     total_points: 0,
   });
