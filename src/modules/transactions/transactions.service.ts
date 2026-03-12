@@ -56,7 +56,7 @@ export class TransactionsService {
             const earnHistory = queryRunner.manager.create('PointHistoryEntity', {
               action_type: 'EARN',
               points: pointsEarned,
-              description: `ได้รับคะแนนจากการซื้อสินค้า มูลค่า ${netAmount.toFixed(2)} บาท`,
+              description: `ได้รับคะแนนจากการทานครบ ${netAmount.toFixed(2)} บาท`,
               member: { id: member_id },
               transaction: savedTx,
             });
