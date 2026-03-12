@@ -11,4 +11,10 @@ export class AuthController {
   async login(@Body() body: { phone: string }) {
     return await this.authService.login(body.phone);
   }
+
+  @Public() 
+  @Post('register')
+  async register(@Body() body: { name: string, phone: string}) {
+    return await this.authService.register(body.name, body.phone);
+  }
 }

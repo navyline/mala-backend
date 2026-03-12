@@ -13,13 +13,14 @@ export class AuthService {
     private readonly jwtService: JwtService, 
   ) {}
 
+  // Login method: checks if the phone number exists, and if so, generates a JWT token with member info
   async login(phone: string) {
     const member = await this.memberRepository.findOne({
       where: { phone: phone },
     });
 
     if (!member) {
-      throw new UnauthorizedException('ไม่พบเบอร์โทรศัพท์นี้ในระบบ โปรดสมัครสมาชิกก่อน');
+      throw new Error('ไม่พบเบอร์โทรศัพท์นี้ในระบบ โปรดสมัครสมาชิกก่อน');
     }
 
     const payload = { 
@@ -38,4 +39,37 @@ export class AuthService {
       }
     };
   }
+
+async register(name: string, phone: string) {
+  const existingMember = await this.memberRepository.findOne({
+    where: { phone: phone }
+  });
+
+  if (existingMember) {
+    throw new Error('เบอร์โทรศัพท์นี้ถูกใช้งานไปแล้ว');
+  }
+
+  const newMember = this.memberRepository.create({
+    name,
+    phone,
+    total_points: 0,
+  });
+
+  const savedMember = await this.memberRepository.save(newMember);
+
+  const payload = { 
+    sub: savedMember.id, 
+    phone: savedMember.phone 
+  };
+
+  return {
+    message: 'สมัครสมาชิกสำเร็จ ยินดีต้อนรับครับ!',
+    access_token: this.jwtService.sign(payload),
+    member_info: {
+      id: savedMember.id,
+      name: savedMember.name,
+      total_points: savedMember.total_points
+    }
+  };
+}
 }

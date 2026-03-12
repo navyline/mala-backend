@@ -29,7 +29,3 @@ export class TransactionsController {
   }
 
 }
-
-function AuthGuard(arg0: string): Function | import("@nestjs/common").CanActivate {
-  throw new Error('Function not implemented.');
-}
